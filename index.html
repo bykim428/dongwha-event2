@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>동화면세점 특별기획전</title>
+
+  <!-- Google Analytics 4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-LSLWYKTVDR"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-LSLWYKTVDR');
+  </script>
+
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      width: 100%;
+      background: #111;
+      display: flex;
+      justify-content: center;
+    }
+
+    #app {
+      width: 100%;
+      max-width: 800px;
+      background: #fff;
+      position: relative;
+    }
+
+    /* ── Zero-gap image rule (global) ── */
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+      margin: 0;
+      padding: 0;
+      border: none;
+    }
+  </style>
+</head>
+<body>
+<div id="app">
+
+  <!-- ── DR.LAB ── -->
+  <section id="drlab-banner">
+    <img id="drlab-banner-img" src="dr.lab_banner_kr.jpg" alt="DR.LAB 배너" />
+  </section>
+  <section id="drlab-content1">
+    <img id="drlab-content1-img" src="dr.lab_content1_kr.jpg" alt="DR.LAB 콘텐츠 1" />
+  </section>
+  <section id="drlab-content2">
+    <img id="drlab-content2-img" src="dr.lab_content2_kr.jpg" alt="DR.LAB 콘텐츠 2" />
+  </section>
+  <section id="drlab-content3">
+    <img id="drlab-content3-img" src="dr.lab_content3_kr.jpg" alt="DR.LAB 콘텐츠 3" />
+  </section>
+
+</div><!-- /#app -->
+
+<script>
+(function () {
+  /* ────────────────────────────────────────────
+     1. Read URL parameters
+  ──────────────────────────────────────────── */
+  const params  = new URLSearchParams(window.location.search);
+  const lang    = params.get('lang') || 'kr';
+  const fromKey = params.get('from') || '면세점';
+
+  /* ────────────────────────────────────────────
+     2. Send GA4 custom parameter
+  ──────────────────────────────────────────── */
+  if (fromKey && typeof gtag === 'function') {
+    gtag('event', 'page_view', { 'entrance_from': fromKey });
+  }
+
+  /* ────────────────────────────────────────────
+     3. Image asset map
+  ──────────────────────────────────────────── */
+  const assets = {
+    /* ── DR.LAB ── */
+    'drlab-banner':   { kr: 'dr.lab_banner_kr.jpg',   en: 'dr.lab_banner_en.jpg',   ch: 'dr.lab_banner_ch.jpg'   },
+    'drlab-content1': { kr: 'dr.lab_content1_kr.jpg', en: 'dr.lab_content1_en.jpg', ch: 'dr.lab_content1_ch.jpg' },
+    'drlab-content2': { kr: 'dr.lab_content2_kr.jpg', en: 'dr.lab_content2_en.jpg', ch: 'dr.lab_content2_ch.jpg' },
+    'drlab-content3': { kr: 'dr.lab_content3_kr.jpg', en: 'dr.lab_content3_en.jpg', ch: 'dr.lab_content3_ch.jpg' }
+  };
+
+  /* ────────────────────────────────────────────
+     4. Swap images based on lang
+  ──────────────────────────────────────────── */
+  function setImg(id, assetKey) {
+    var el  = document.getElementById(id + '-img');
+    var map = assets[assetKey];
+    if (el && map) el.src = map[lang] || map.kr;
+  }
+
+  Object.keys(assets).forEach(function(key) {
+    setImg(key, key);
+  });
+
+  /* ────────────────────────────────────────────
+     5. 페이지 타이틀 — lang별 분기
+  ──────────────────────────────────────────── */
+  document.title = lang === 'kr' ? '동화면세점 특별기획전' : 'Dongwha Dutyfree_event';
+
+})();
+</script>
+</body>
+</html>
